@@ -90,7 +90,17 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
-            ElevatedButton(onPressed: _incrementCounter, child: Text('Test button'))
+            TextButton(onPressed: _incrementCounter, child: Text('Primary button'),),
+            OutlinedButton(onPressed: _incrementCounter, child: Text('Secondary button'),),
+            OutlinedButton(onPressed: _incrementCounter,
+              child: Stack(
+                children: [
+                  Positioned(child: Icon(Icons.connect_without_contact), left: 0,),
+                  Align(child: Text('Text with icon')),
+                ],
+                fit: StackFit.passthrough
+              ),
+            ),
           ],
         ),
       ),

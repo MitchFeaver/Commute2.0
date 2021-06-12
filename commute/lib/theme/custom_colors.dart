@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomColors {
   static final primaryColorLight = const Color(0xFF00A400);
+  static final primaryOutlinedButtonColorLight = const Color(0xFF6FCF97);
 
   // generated on http://mcg.mbitson.com/
   static final primaryColorSwatchLight =

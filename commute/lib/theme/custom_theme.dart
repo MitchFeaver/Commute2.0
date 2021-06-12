@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'custom_colors.dart';
+import 'package:commute/theme/custom_colors.dart';
+import 'package:commute/theme/components/custom_all.dart';
 
 class CustomTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       primaryColor: CustomColors.primaryColorSwatchLight,
       accentColor: CustomColors.primaryColorLight,
-      elevatedButtonTheme: new ElevatedButtonThemeData(
-        style: new ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(CustomColors.primaryColorSwatchLight),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
-            )
-          )
-        )
-      )
+      textButtonTheme: new TextButtonThemeData(
+        style: CustomButtons.primaryTextButtonStyle,
+      ),
+      outlinedButtonTheme: new OutlinedButtonThemeData(
+        style: CustomButtons.primaryOutlinedButtonStyle,
+      ),
     );
   }
 }

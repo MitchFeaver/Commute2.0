@@ -6,6 +6,7 @@ class CustomButtons {
   static const double buttonCornerRadius = 25;
   static const double buttonElevation = 2.5;
   static const double outlinedButtonBorderWidth = 4;
+  static const double buttonFontSize = 18;
 
   static final primaryTextButtonStyle = TextButton.styleFrom(
     backgroundColor: CustomColors.primaryColorSwatchLight,
@@ -13,6 +14,9 @@ class CustomButtons {
     primary: Colors.white,
     shadowColor: Colors.black,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(CustomButtons.buttonCornerRadius)),
+    textStyle: TextStyle(
+      fontSize: CustomButtons.buttonFontSize,
+    ),
   );
 
   static final primaryOutlinedButtonStyle = OutlinedButton.styleFrom(
@@ -24,6 +28,9 @@ class CustomButtons {
     side: BorderSide(
       color: CustomColors.primaryOutlinedButtonColorLight,
       width: CustomButtons.outlinedButtonBorderWidth,
+    ),
+    textStyle: TextStyle(
+      fontSize: CustomButtons.buttonFontSize,
     ),
   );
 }

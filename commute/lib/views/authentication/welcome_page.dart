@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:commute/components/components.dart';
 import 'package:commute/views/main/main_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key key}) : super(key: key);
@@ -85,7 +86,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 SizedBox(
                   child: TextButton(
                     onPressed: _onButtonPressed,
-                    child: Text('Get started'),
+                    child: Text(AppLocalizations.of(context).getStarted),
                   ),
                   height: 40,
                   width: double.infinity,
@@ -94,7 +95,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 SizedBox(
                   child: OutlinedButton(
                     onPressed: _onButtonPressed,
-                    child: Text('I already have an account'),
+                    child: Text(AppLocalizations.of(context).iAlreadyHaveAnAccount),
                   ),
                   height: 40,
                   width: double.infinity,

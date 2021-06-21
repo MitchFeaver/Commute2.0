@@ -8,6 +8,12 @@ class CustomTheme {
     return ThemeData(
       primaryColor: CustomColors.primaryColorSwatchLight,
       accentColor: CustomColors.primaryColorLight,
+      textTheme: TextTheme(
+          bodyText1: TextStyle(color: CustomColors.defaultTextColor),
+          headline2: TextStyle(
+            color: CustomColors.defaultTextColor,
+            fontSize: 48,
+          )),
       textButtonTheme: new TextButtonThemeData(
         style: CustomButtons.primaryTextButtonStyle,
       ),

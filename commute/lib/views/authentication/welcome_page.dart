@@ -110,7 +110,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     onPressed: _onButtonPressed,
                     child: Text(AppLocalizations.of(context).getStarted),
                   ),
-                  height: 40,
+                  height: 50,
                   width: double.infinity,
                 ),
                 SizedBox(height: 10),
@@ -120,18 +120,40 @@ class _WelcomePageState extends State<WelcomePage> {
                     child: Text(
                         AppLocalizations.of(context).iAlreadyHaveAnAccount),
                   ),
-                  height: 40,
+                  height: 50,
                   width: double.infinity,
                 ),
                 SizedBox(height: 10),
-                // TODO: needs to match guidelines https://developers.google.com/identity/branding-guidelines
                 SizedBox(
                   child: OutlinedButton(
                     onPressed: _onButtonPressed,
-                    child:
-                        Text(AppLocalizations.of(context).continueWithGoogle),
+                    //Text(AppLocalizations.of(context).continueWithGoogle),
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Image(
+                            image: AssetImage("google_logo.png"),
+                            height: 35.0,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              'Sign in with Google',
+                            style: TextStyle(
+                              //fontSize: 20,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                  height: 40,
+                  height: 50,
                   width: double.infinity,
                 ),
                 SizedBox(height: 10),

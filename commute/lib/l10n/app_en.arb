@@ -1,5 +1,4 @@
 {
-  "continueWithGoogle": "Continue with Google",
   "getStarted": "Get Started",
   "@getStarted": {
     "description": "An invitation to start an app process"
@@ -7,6 +6,7 @@
   "iAlreadyHaveAnAccount": "I already have an account",
   "privacy": "Privacy",
   "terms": "Terms",
+  "signInWithGoogle": "Sign in with Google",
   "welcome": "Welcome",
   "whereAreYouGoingToday_QuestionMark": "Where are you going today?"
 }

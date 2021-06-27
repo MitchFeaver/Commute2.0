@@ -13,6 +13,11 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  final _googleSignInStyle = TextButton.styleFrom(
+    backgroundColor: Colors.white,
+    side: BorderSide.none,
+  );
+
   final List<String> _carouselItems = [
     "First Slider item",
     "Second Slider item",
@@ -127,7 +132,6 @@ class _WelcomePageState extends State<WelcomePage> {
                 SizedBox(
                   child: OutlinedButton(
                     onPressed: _onButtonPressed,
-                    //Text(AppLocalizations.of(context).continueWithGoogle),
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(
@@ -136,22 +140,22 @@ class _WelcomePageState extends State<WelcomePage> {
                         children: <Widget>[
                           Image(
                             image: AssetImage("assets/images/google_logo.png"),
-                            height: 35.0,
+                            height: 18.0,
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(left: 10),
+                            padding: const EdgeInsets.only(left: 24),
                             child: Text(
-                              'Sign in with Google',
-                            style: TextStyle(
-                              //fontSize: 20,
-                              color: Colors.black54,
-                              fontWeight: FontWeight.w600,
+                              AppLocalizations.of(context).signInWithGoogle,
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           )
                         ],
                       ),
                     ),
+                    style: _googleSignInStyle,
                   ),
                   height: 50,
                   width: double.infinity,

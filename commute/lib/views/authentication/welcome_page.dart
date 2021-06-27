@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:commute/components/components.dart';
+import 'package:commute/theme/components/custom_all.dart';
 import 'package:commute/theme/custom_colors.dart';
 import 'package:commute/views/main/main_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -18,12 +20,6 @@ class _WelcomePageState extends State<WelcomePage> {
     side: BorderSide.none,
   );
 
-  final List<String> _carouselItems = [
-    "First Slider item",
-    "Second Slider item",
-    "Third slider item",
-    "Fourth Slider item"
-  ];
   int _currentCarouselIndex = 0;
   final ButtonStyle _privacyTermsTextButtonStyle = TextButton.styleFrom(
       backgroundColor: Colors.transparent,
@@ -35,6 +31,57 @@ class _WelcomePageState extends State<WelcomePage> {
       side: BorderSide.none,
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       textStyle: TextStyle(color: CustomColors.defaultTextColor));
+
+  List<Widget> _getCarouselItems(context) => [
+    Container(
+      child: Image(
+        image: AssetImage("assets/images/commute_logo_full_white.png"),
+        height: 18.0,
+      ),
+      margin: EdgeInsets.only(left: CustomSpacing.spacing_32, right: CustomSpacing.spacing_32),
+    ),
+        _generateCarouselItem(
+            AppLocalizations.of(context).letUsDoTheWork,
+            AppLocalizations.of(context)
+                .automaticallyTrackCarJourneys_Description),
+        _generateCarouselItem(
+            AppLocalizations.of(context).splitYourJourneyCosts,
+            AppLocalizations.of(context).trackAndSettleBalances_Description),
+        _generateCarouselItem(
+            AppLocalizations.of(context).offsetYourCarbonEmissions,
+            AppLocalizations.of(context).travelCarbonNeutral_Description),
+      ];
+
+  Widget _generateCarouselItem(String title, String description) => Container(
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: Theme.of(context).textTheme.headline2.copyWith(
+                    color: Colors.white,
+                fontSize: 36,
+
+                  ),
+            ),
+            SizedBox(height: CustomSpacing.spacing_8),
+            Container(
+              child: Text(description,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  )),
+              margin: EdgeInsets.only(right: CustomSpacing.spacing_64),
+            ),
+          ],
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+        ),
+        margin: EdgeInsets.fromLTRB(
+            CustomSpacing.spacing_16,
+            CustomSpacing.spacing_16,
+            CustomSpacing.spacing_16,
+            CustomSpacing.spacing_32),
+      );
 
   void _onButtonPressed() {
     Navigator.pushReplacement(
@@ -53,20 +100,19 @@ class _WelcomePageState extends State<WelcomePage> {
             child: Stack(
               children: [
                 CarouselSlider(
-                    items: _carouselItems.map((i) {
+                    items: _getCarouselItems(context).map((item) {
                       return Builder(
                         builder: (BuildContext context) {
                           return Container(
                               width: double.infinity,
                               decoration: BoxDecoration(color: Colors.amber),
-                              child: Text(
-                                '$i',
-                                style: TextStyle(fontSize: 16.0),
-                              ));
+                              child: item);
                         },
                       );
                     }).toList(),
                     options: CarouselOptions(
+                      autoPlay: true,
+                      autoPlayInterval: Duration(seconds: 8),
                       height: double.infinity,
                       onPageChanged: (index, reason) {
                         setState(() {
@@ -77,7 +123,8 @@ class _WelcomePageState extends State<WelcomePage> {
                     )),
                 Positioned(
                   child: Row(
-                    children: _carouselItems.asMap().entries.map((entry) {
+                    children:
+                        _getCarouselItems(context).asMap().entries.map((entry) {
                       return Container(
                         width: 8.0,
                         height: 8.0,
@@ -97,7 +144,11 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(24),
+            padding: EdgeInsets.fromLTRB(
+                CustomSpacing.spacing_24,
+                CustomSpacing.spacing_8,
+                CustomSpacing.spacing_24,
+                CustomSpacing.spacing_24),
             child: Column(
               children: <Widget>[
                 Text(
@@ -109,7 +160,7 @@ class _WelcomePageState extends State<WelcomePage> {
                       .whereAreYouGoingToday_QuestionMark,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: CustomSpacing.spacing_24),
                 SizedBox(
                   child: TextButton(
                     onPressed: _onButtonPressed,
@@ -118,7 +169,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   height: 50,
                   width: double.infinity,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: CustomSpacing.spacing_16),
                 SizedBox(
                   child: OutlinedButton(
                     onPressed: _onButtonPressed,
@@ -128,7 +179,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   height: 50,
                   width: double.infinity,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: CustomSpacing.spacing_16),
                 SizedBox(
                   child: OutlinedButton(
                     onPressed: _onButtonPressed,
@@ -160,7 +211,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   height: 50,
                   width: double.infinity,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: CustomSpacing.spacing_16),
                 Row(
                   children: [
                     TextButton(

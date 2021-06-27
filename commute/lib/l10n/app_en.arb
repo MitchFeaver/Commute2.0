@@ -1,12 +1,18 @@
 {
+  "automaticallyTrackCarJourneys_Description": "Automatically track your car journeys, without lifting a finger.",
   "getStarted": "Get Started",
   "@getStarted": {
     "description": "An invitation to start an app process"
   },
   "iAlreadyHaveAnAccount": "I already have an account",
+  "letUsDoTheWork": "Let us do the work",
+  "offsetYourCarbonEmissions": "Offset your carbon emissions",
   "privacy": "Privacy",
   "terms": "Terms",
   "signInWithGoogle": "Sign in with Google",
+  "splitYourJourneyCosts": "Split your journey costs",
+  "trackAndSettleBalances_Description": "Track and settle balances in app, never discuss who owes who again.",
+  "travelCarbonNeutral_Description": "Travel carbon neutral by offsetting your emissions as you drive.",
   "welcome": "Welcome",
   "whereAreYouGoingToday_QuestionMark": "Where are you going today?"
 }

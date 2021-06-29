@@ -1,3 +1,4 @@
+import 'package:commute/theme/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -11,13 +12,19 @@ class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
-      'Index 0: Home',
+      'Index 0: Feed',
     ),
     Text(
-      'Index 1: Business',
+      'Index 1: Balance',
     ),
     Text(
-      'Index 2: School',
+      'Index 2: Drive',
+    ),
+    Text(
+      'Index 3: Join',
+    ),
+    Text(
+      'Index 4: Offset',
     ),
   ];
 
@@ -31,7 +38,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+        title: const Text('Egg'),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -40,19 +47,28 @@ class _MainPageState extends State<MainPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Feed',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
+            icon: Icon(Icons.account_balance_wallet),
+            label: 'Balance',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
+            icon: Icon(Icons.drive_eta),
+            label: 'Drive',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code),
+            label: 'Join',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Offset',
+          )
         ],
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: CustomColors.primaryColorLight,
         onTap: _onItemTapped,
       ),
     );

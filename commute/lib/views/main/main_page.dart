@@ -2,7 +2,7 @@ import 'package:commute/theme/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key key}) : super(key: key);
+  const MainPage() : super();
 
   @override
   State<StatefulWidget> createState() => _MainPageState();
@@ -38,7 +38,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Egg'),
+        title: const Text('Commute'),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

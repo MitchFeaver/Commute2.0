@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "669229917644",
+    "project_id": "commute-caad6",
+    "storage_bucket": "commute-caad6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669229917644:android:93f4a2aa40f97ad9516969",
+        "android_client_info": {
+          "package_name": "com.example.commute"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "669229917644-7f9h2inuissac9edsct16ktvfbt172kd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.commute",
+            "certificate_hash": "db5b791b56e8d8f5a34b90e678c8c413dc1537ab"
+          }
+        },
+        {
+          "client_id": "669229917644-9u0ejqvn0j9k4fu99iqdvdiog3spjk4o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSNhrFWO5Z-j02N7TFyKclqLRheSBqLGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "669229917644-9u0ejqvn0j9k4fu99iqdvdiog3spjk4o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

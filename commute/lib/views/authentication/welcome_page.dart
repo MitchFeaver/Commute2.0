@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:commute/components/components.dart';
 import 'package:commute/theme/components/custom_all.dart';
@@ -6,9 +8,12 @@ import 'package:commute/views/main/main_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/google_sign_in.dart';
 
 class WelcomePage extends StatefulWidget {
-  const WelcomePage({Key key}) : super(key: key);
+  const WelcomePage() : super();
 
   @override
   State<StatefulWidget> createState() => _WelcomePageState();
@@ -41,15 +46,15 @@ class _WelcomePageState extends State<WelcomePage> {
       margin: EdgeInsets.only(left: CustomSpacing.spacing_32, right: CustomSpacing.spacing_32),
     ),
         _generateCarouselItem(
-            AppLocalizations.of(context).letUsDoTheWork,
-            AppLocalizations.of(context)
+            AppLocalizations.of(context)!.letUsDoTheWork,
+            AppLocalizations.of(context)!
                 .automaticallyTrackCarJourneys_Description),
         _generateCarouselItem(
-            AppLocalizations.of(context).splitYourJourneyCosts,
-            AppLocalizations.of(context).trackAndSettleBalances_Description),
+            AppLocalizations.of(context)!.splitYourJourneyCosts,
+            AppLocalizations.of(context)!.trackAndSettleBalances_Description),
         _generateCarouselItem(
-            AppLocalizations.of(context).offsetYourCarbonEmissions,
-            AppLocalizations.of(context).travelCarbonNeutral_Description),
+            AppLocalizations.of(context)!.offsetYourCarbonEmissions,
+            AppLocalizations.of(context)!.travelCarbonNeutral_Description),
       ];
 
   Widget _generateCarouselItem(String title, String description) => Container(
@@ -57,7 +62,7 @@ class _WelcomePageState extends State<WelcomePage> {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.headline2.copyWith(
+              style: Theme.of(context).textTheme.headline2!.copyWith(
                     color: Colors.white,
                 fontSize: 36,
 
@@ -88,6 +93,13 @@ class _WelcomePageState extends State<WelcomePage> {
       context,
       MaterialPageRoute(builder: (context) => MainPage()),
     );
+  }
+
+  void googleSignIn() {
+    log("googleSignIn");
+    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+    log("googleSignIn2");
+    provider.googleLogin();
   }
 
   @override
@@ -152,11 +164,11 @@ class _WelcomePageState extends State<WelcomePage> {
             child: Column(
               children: <Widget>[
                 Text(
-                  AppLocalizations.of(context).welcome,
+                  AppLocalizations.of(context)!.welcome,
                   style: Theme.of(context).textTheme.headline2,
                 ),
                 Text(
-                  AppLocalizations.of(context)
+                  AppLocalizations.of(context)!
                       .whereAreYouGoingToday_QuestionMark,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -164,7 +176,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 SizedBox(
                   child: TextButton(
                     onPressed: _onButtonPressed,
-                    child: Text(AppLocalizations.of(context).getStarted),
+                    child: Text(AppLocalizations.of(context)!.getStarted),
                   ),
                   height: 50,
                   width: double.infinity,
@@ -174,7 +186,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   child: OutlinedButton(
                     onPressed: _onButtonPressed,
                     child: Text(
-                        AppLocalizations.of(context).iAlreadyHaveAnAccount),
+                        AppLocalizations.of(context)!.iAlreadyHaveAnAccount),
                   ),
                   height: 50,
                   width: double.infinity,
@@ -182,7 +194,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 SizedBox(height: CustomSpacing.spacing_16),
                 SizedBox(
                   child: OutlinedButton(
-                    onPressed: _onButtonPressed,
+                    onPressed: googleSignIn,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(
@@ -196,7 +208,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           Padding(
                             padding: const EdgeInsets.only(left: 24),
                             child: Text(
-                              AppLocalizations.of(context).signInWithGoogle,
+                              AppLocalizations.of(context)!.signInWithGoogle,
                               style: TextStyle(
                                 color: Colors.black54,
                                 fontWeight: FontWeight.w600,
@@ -215,7 +227,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 Row(
                   children: [
                     TextButton(
-                      child: Text(AppLocalizations.of(context).privacy),
+                      child: Text(AppLocalizations.of(context)!.privacy),
                       onPressed: () {},
                       style: _privacyTermsTextButtonStyle,
                     ),
@@ -223,7 +235,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     Text("|", style: Theme.of(context).textTheme.bodyText1),
                     SizedBox(width: 10),
                     TextButton(
-                      child: Text(AppLocalizations.of(context).terms),
+                      child: Text(AppLocalizations.of(context)!.terms),
                       onPressed: () {},
                       style: _privacyTermsTextButtonStyle,
                     ),

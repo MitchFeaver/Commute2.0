@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:commute/components/components.dart';
 import 'package:commute/theme/components/custom_all.dart';
 import 'package:commute/theme/custom_colors.dart';
+import 'package:commute/views/authentication/sign-up/sign_up_page.dart';
 import 'package:commute/views/main/main_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -109,6 +110,13 @@ class _WelcomePageState extends State<WelcomePage> {
             CustomSpacing.spacing_32),
       );
 
+  void _onSignUpButtonPressed() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SignUpPage()),
+    );
+  }
+
   void _onButtonPressed() {
     Navigator.pushReplacement(
       context,
@@ -193,7 +201,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 SizedBox(height: CustomSpacing.spacing_24),
                 SizedBox(
                   child: TextButton(
-                    onPressed: _onButtonPressed,
+                    onPressed: _onSignUpButtonPressed,
                     child: Text(AppLocalizations.of(context)!.getStarted),
                   ),
                   height: 50,

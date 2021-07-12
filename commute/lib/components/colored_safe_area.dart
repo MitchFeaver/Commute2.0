@@ -11,7 +11,10 @@ class ColoredSafeArea extends StatelessWidget {
     return Container(
       color: CustomColors.primaryColorSwatchLight,
       child: SafeArea(
-        child: child,
+        child: Container(
+          color: Colors.white,
+          child: child,
+        ),
       ),
     );
   }

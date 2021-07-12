@@ -22,27 +22,25 @@ Future main() async {
 
 class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => GoogleSignInProvider(),
-      // SystemChrome.setPreferredOrientations([
-      //   DeviceOrientation.portraitUp,
-      //   DeviceOrientation.portraitDown,
-      // ]);
-      child: MaterialApp(
-        title: 'Commute',
-        localizationsDelegates: [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: [
-          const Locale('en', ''), // English, no country code
-        ],
-        theme: CustomTheme.lightTheme,
-        home: WelcomePage(),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+    create: (context) => GoogleSignInProvider(),
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.portraitUp,
+    //   DeviceOrientation.portraitDown,
+    // ]);
+    child: MaterialApp(
+      title: 'Commute',
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', ''), // English, no country code
+      ],
+      theme: CustomTheme.lightTheme,
+      home: WelcomePage(),
+    ),
+  );
 }

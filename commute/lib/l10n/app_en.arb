@@ -1,5 +1,8 @@
 {
   "automaticallyTrackCarJourneys_Description": "Automatically track your car journeys, without lifting a finger.",
+  "back": "Back",
+  "confirmPassword": "Confirm Password",
+  "email": "Email",
   "getStarted": "Get Started",
   "@getStarted": {
     "description": "An invitation to start an app process"
@@ -7,6 +10,7 @@
   "iAlreadyHaveAnAccount": "I already have an account",
   "letUsDoTheWork": "Let us do the work",
   "offsetYourCarbonEmissions": "Offset your carbon emissions",
+  "password": "Password",
   "privacy": "Privacy",
   "terms": "Terms",
   "signInWithGoogle": "Sign in with Google",

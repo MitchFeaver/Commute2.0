@@ -7,6 +7,7 @@ import 'package:commute/theme/custom_colors.dart';
 import 'package:commute/views/main/main_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
@@ -37,35 +38,50 @@ class _WelcomePageState extends State<WelcomePage> {
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       textStyle: TextStyle(color: CustomColors.defaultTextColor));
 
-  List<Widget> _getCarouselItems(context) => [
-    Container(
-      child: Image(
-        image: AssetImage("assets/images/commute_logo_full_white.png"),
-        height: 18.0,
+  List<Widget> _getCarouselItems(context) {
+    precacheImage(AssetImage("assets/images/car_evening.png"), context);
+    precacheImage(AssetImage("assets/images/car_resting_mountains.png"), context);
+    precacheImage(AssetImage("assets/images/clouds.png"), context);
+    return [
+      Container(
+        child: Image(
+          image: AssetImage("assets/images/commute_logo_full_white.png"),
+          height: 18.0,
+        ),
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage("assets/images/road_bird_view_forest.png"),
+          fit: BoxFit.cover,
+        )),
+        padding: EdgeInsets.only(
+            left: CustomSpacing.spacing_32, right: CustomSpacing.spacing_32),
       ),
-      margin: EdgeInsets.only(left: CustomSpacing.spacing_32, right: CustomSpacing.spacing_32),
-    ),
-        _generateCarouselItem(
-            AppLocalizations.of(context)!.letUsDoTheWork,
-            AppLocalizations.of(context)!
-                .automaticallyTrackCarJourneys_Description),
-        _generateCarouselItem(
-            AppLocalizations.of(context)!.splitYourJourneyCosts,
-            AppLocalizations.of(context)!.trackAndSettleBalances_Description),
-        _generateCarouselItem(
-            AppLocalizations.of(context)!.offsetYourCarbonEmissions,
-            AppLocalizations.of(context)!.travelCarbonNeutral_Description),
-      ];
+      _generateCarouselItem(
+          AppLocalizations.of(context)!.letUsDoTheWork,
+          AppLocalizations.of(context)!
+              .automaticallyTrackCarJourneys_Description,
+          "assets/images/car_evening.png"),
+      _generateCarouselItem(
+          AppLocalizations.of(context)!.splitYourJourneyCosts,
+          AppLocalizations.of(context)!.trackAndSettleBalances_Description,
+          "assets/images/car_resting_mountains.png"),
+      _generateCarouselItem(
+          AppLocalizations.of(context)!.offsetYourCarbonEmissions,
+          AppLocalizations.of(context)!.travelCarbonNeutral_Description,
+          "assets/images/clouds.png"),
+    ];
+  }
 
-  Widget _generateCarouselItem(String title, String description) => Container(
+  Widget _generateCarouselItem(
+          String title, String description, String backgroundImagePath) =>
+      Container(
         child: Column(
           children: [
             Text(
               title,
               style: Theme.of(context).textTheme.headline2!.copyWith(
                     color: Colors.white,
-                fontSize: 36,
-
+                    fontSize: 36,
                   ),
             ),
             SizedBox(height: CustomSpacing.spacing_8),
@@ -81,7 +97,12 @@ class _WelcomePageState extends State<WelcomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
         ),
-        margin: EdgeInsets.fromLTRB(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage(backgroundImagePath),
+          fit: BoxFit.cover,
+        )),
+        padding: EdgeInsets.fromLTRB(
             CustomSpacing.spacing_16,
             CustomSpacing.spacing_16,
             CustomSpacing.spacing_16,
@@ -115,10 +136,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     items: _getCarouselItems(context).map((item) {
                       return Builder(
                         builder: (BuildContext context) {
-                          return Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(color: Colors.amber),
-                              child: item);
+                          return Container(width: double.infinity, child: item);
                         },
                       );
                     }).toList(),

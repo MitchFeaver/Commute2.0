@@ -24,10 +24,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
     create: (context) => GoogleSignInProvider(),
-    // SystemChrome.setPreferredOrientations([
-    //   DeviceOrientation.portraitUp,
-    //   DeviceOrientation.portraitDown,
-    // ]);
     child: MaterialApp(
       title: 'Commute',
       localizationsDelegates: [

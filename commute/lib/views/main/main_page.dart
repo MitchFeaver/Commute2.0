@@ -1,5 +1,9 @@
+
+import 'package:commute/provider/google_sign_in.dart';
 import 'package:commute/theme/custom_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage() : super();
@@ -36,12 +40,35 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Commute'),
+        actions: [
+          TextButton(
+            child: Text('Log Out'),
+            onPressed: () {
+              final provider =
+                Provider.of<GoogleSignInProvider>(context, listen: false);
+              provider.logOut();
+            },
+          )
+        ],
       ),
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+                user!.displayName!,
+            ),
+            CircleAvatar(
+              radius: 40,
+              backgroundImage: NetworkImage(user.photoURL!),
+            )
+          ],
+        )
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

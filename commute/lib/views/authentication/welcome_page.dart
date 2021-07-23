@@ -6,6 +6,8 @@ import 'package:commute/theme/components/custom_all.dart';
 import 'package:commute/theme/custom_colors.dart';
 import 'package:commute/views/authentication/login_page.dart';
 import 'package:commute/views/authentication/sign-up/sign_up_page.dart';
+import 'package:commute/views/main/main_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -41,7 +43,8 @@ class _WelcomePageState extends State<WelcomePage> {
 
   List<Widget> _getCarouselItems(context) {
     precacheImage(AssetImage("assets/images/car_evening.png"), context);
-    precacheImage(AssetImage("assets/images/car_resting_mountains.png"), context);
+    precacheImage(
+        AssetImage("assets/images/car_resting_mountains.png"), context);
     precacheImage(AssetImage("assets/images/clouds.png"), context);
     return [
       Container(
@@ -125,14 +128,25 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   void _googleSignIn() {
-    log("googleSignIn");
     final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-    log("googleSignIn2");
     provider.googleLogin();
   }
 
   @override
   Widget build(BuildContext context) {
+    body: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+    builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+    return Center(child: CircularProgressIndicator());
+    } else if (snapshot.hasData) {
+    return MainPage();
+    } else if (snapshot.hasError) {
+    return Center(
+    child:
+    Text(AppLocalizations.of(context)!.somethingWentWrong)
+    );
+    }
     return ColoredSafeArea(
       child: Scaffold(
           body: Column(
@@ -220,7 +234,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 SizedBox(height: CustomSpacing.spacing_16),
                 SizedBox(
                   child: OutlinedButton(
-                    onPressed: _googleSignIn,
+                    onPressed: googleSignIn,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(

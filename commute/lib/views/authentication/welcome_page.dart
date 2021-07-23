@@ -4,8 +4,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:commute/components/components.dart';
 import 'package:commute/theme/components/custom_all.dart';
 import 'package:commute/theme/custom_colors.dart';
+import 'package:commute/views/authentication/login_page.dart';
 import 'package:commute/views/authentication/sign-up/sign_up_page.dart';
-import 'package:commute/views/main/main_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -117,14 +117,14 @@ class _WelcomePageState extends State<WelcomePage> {
     );
   }
 
-  void _onButtonPressed() {
-    Navigator.pushReplacement(
+  void _onLoginButtonPressed() {
+    Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MainPage()),
+      MaterialPageRoute(builder: (context) => LoginPage()),
     );
   }
 
-  void googleSignIn() {
+  void _googleSignIn() {
     log("googleSignIn");
     final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
     log("googleSignIn2");
@@ -210,7 +210,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 SizedBox(height: CustomSpacing.spacing_16),
                 SizedBox(
                   child: OutlinedButton(
-                    onPressed: _onButtonPressed,
+                    onPressed: _onLoginButtonPressed,
                     child: Text(
                         AppLocalizations.of(context)!.iAlreadyHaveAnAccount),
                   ),
@@ -220,7 +220,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 SizedBox(height: CustomSpacing.spacing_16),
                 SizedBox(
                   child: OutlinedButton(
-                    onPressed: googleSignIn,
+                    onPressed: _googleSignIn,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(

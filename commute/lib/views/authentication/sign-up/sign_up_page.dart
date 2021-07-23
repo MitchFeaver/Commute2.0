@@ -1,6 +1,8 @@
 import 'package:commute/components/colored_safe_area.dart';
 import 'package:commute/theme/components/custom_all.dart';
 import 'package:commute/theme/custom_colors.dart';
+import 'package:commute/views/authentication/sign-up/create_profile_page.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,22 +15,26 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final ButtonStyle _backTextButtonStyle = TextButton.styleFrom(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
-      minimumSize: Size.zero,
-      padding: EdgeInsets.zero,
-      primary: Colors.white,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      side: BorderSide.none,
-      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      textStyle: TextStyle(color: CustomColors.defaultTextColor));
-
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
   _onBackButtonPressed() {
     Navigator.pop(context);
+  }
+
+  _onDoneButtonPressed() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => CreateProfilePage()),
+    );
+  }
+
+  _onPrivacyPolicyTapped() {
+    // do something here
+  }
+
+  _onTermsAndConditionsTapped() {
+    // do something here
   }
 
   @override
@@ -44,12 +50,12 @@ class _SignUpPageState extends State<SignUpPage> {
                   onPressed: _onBackButtonPressed,
                   icon: Icon(Icons.chevron_left_outlined, size: 16),
                   label: Text(AppLocalizations.of(context)!.back),
-                  style: _backTextButtonStyle,
+                  style: CustomButtons.loginSignUpBackTextButtonStyle,
                 ),
                 SizedBox(height: CustomSpacing.spacing_16),
                 Container(
                   child: Text(
-                    "Sign up",
+                    AppLocalizations.of(context)!.signUp,
                     style: Theme.of(context).textTheme.headline2!.copyWith(
                           color: Colors.white,
                           fontSize: 48,
@@ -89,25 +95,26 @@ class _SignUpPageState extends State<SignUpPage> {
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.password,
                         suffixIcon: IconButton(
-                            icon: Icon(_obscurePassword
-                                ? Icons.visibility_off_outlined
-                                : Icons.visibility_outlined),
-                            color: CustomColors.primaryColorSwatchLight,
-                            onPressed: () {
-                              setState(() {
-                                _obscurePassword = !_obscurePassword;
-                              });
-                            },
-                            iconSize: 20,
+                          icon: Icon(_obscurePassword
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined),
+                          color: CustomColors.primaryColorSwatchLight,
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword;
+                            });
+                          },
+                          iconSize: 20,
                           splashColor: Colors.transparent,
-                          ),
+                        ),
                       ),
                       obscureText: _obscurePassword,
                     ),
                     SizedBox(height: CustomSpacing.spacing_8),
                     TextField(
                       decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.confirmPassword,
+                        labelText:
+                            AppLocalizations.of(context)!.confirmPassword,
                         suffixIcon: IconButton(
                           icon: Icon(_obscureConfirmPassword
                               ? Icons.visibility_off_outlined
@@ -115,7 +122,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           color: CustomColors.primaryColorSwatchLight,
                           onPressed: () {
                             setState(() {
-                              _obscureConfirmPassword = !_obscureConfirmPassword;
+                              _obscureConfirmPassword =
+                                  !_obscureConfirmPassword;
                             });
                           },
                           iconSize: 20,
@@ -127,8 +135,43 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(height: CustomSpacing.spacing_24),
                     SizedBox(
                         child: TextButton(
-                          child: Text("test"),
-                          onPressed: () {},
+                          child: Text(AppLocalizations.of(context)!.done),
+                          onPressed: _onDoneButtonPressed,
+                        ),
+                        width: double.infinity),
+                    SizedBox(height: CustomSpacing.spacing_24),
+                    SizedBox(
+                        child: RichText(
+                          text: TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: AppLocalizations.of(context)!
+                                        .bySigningUp),
+                                TextSpan(
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = _onTermsAndConditionsTapped(),
+                                    text: AppLocalizations.of(context)!
+                                        .termsAndConditions,
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                    )),
+                                TextSpan(
+                                    text: AppLocalizations.of(context)!
+                                        .and_Lowercase),
+                                TextSpan(
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = _onPrivacyPolicyTapped(),
+                                    text: AppLocalizations.of(context)!
+                                        .privacyPolicy,
+                                    style: TextStyle(
+                                      decoration: TextDecoration.underline,
+                                    )),
+                              ],
+                              style: TextStyle(
+                                color: CustomColors.defaultTextColor,
+                                fontSize: 16,
+                              )),
+                          textAlign: TextAlign.center,
                         ),
                         width: double.infinity),
                   ],

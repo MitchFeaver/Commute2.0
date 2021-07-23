@@ -33,4 +33,15 @@ class CustomButtons {
       fontSize: CustomButtons.buttonFontSize,
     ),
   );
+
+  static final ButtonStyle loginSignUpBackTextButtonStyle = TextButton.styleFrom(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      minimumSize: Size.zero,
+      padding: EdgeInsets.zero,
+      primary: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+      side: BorderSide.none,
+      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      textStyle: TextStyle(color: CustomColors.defaultTextColor));
 }

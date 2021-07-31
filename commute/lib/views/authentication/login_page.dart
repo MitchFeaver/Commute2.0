@@ -88,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                               decoration: InputDecoration(
                                 labelText: AppLocalizations.of(context)!.email,
                               ),
+                              keyboardType: TextInputType.emailAddress,
                             ),
                             SizedBox(height: CustomSpacing.spacing_8),
                             TextField(
@@ -107,6 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                                   splashColor: Colors.transparent,
                                 ),
                               ),
+                              keyboardType: TextInputType.visiblePassword,
                               obscureText: _obscurePassword,
                             ),
                             SizedBox(height: CustomSpacing.spacing_24),

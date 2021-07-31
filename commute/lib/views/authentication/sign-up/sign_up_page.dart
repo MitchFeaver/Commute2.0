@@ -24,14 +24,14 @@ class _SignUpPageState extends State<SignUpPage> {
     Navigator.pop(context);
   }
 
-  _onDoneButtonPressed() {
-    SafeExecutor.execute(context, () async {
+  _onDoneButtonPressed() async {
+    await SafeExecutor.execute(context, () async {
       await Future.delayed(Duration(seconds: 1));
-      await Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => CreateProfilePage()),
-      );
     });
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => CreateProfilePage()),
+    );
   }
 
   _onPrivacyPolicyTapped() {

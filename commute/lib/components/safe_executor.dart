@@ -5,7 +5,7 @@ import 'dialogs.dart';
 class SafeExecutor {
   static bool _isRunning = false;
 
-  static void execute(BuildContext context, Function action, [bool showLoading = true, String? loadingMessage]) async {
+  static execute(BuildContext context, Function action, [bool showLoading = true, String? loadingMessage]) async {
     if (!_isRunning) {
       _isRunning = true;
       if (showLoading) {

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:commute/components/components.dart';
+import 'package:commute/components/colored_safe_area.dart';
 import 'package:commute/theme/components/custom_all.dart';
 import 'package:commute/theme/custom_colors.dart';
 import 'package:commute/views/authentication/login_page.dart';

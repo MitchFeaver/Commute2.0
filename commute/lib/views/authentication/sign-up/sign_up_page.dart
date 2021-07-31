@@ -1,4 +1,5 @@
 import 'package:commute/components/colored_safe_area.dart';
+import 'package:commute/components/safe_executor.dart';
 import 'package:commute/theme/components/custom_all.dart';
 import 'package:commute/theme/custom_colors.dart';
 import 'package:commute/views/authentication/sign-up/create_profile_page.dart';
@@ -24,10 +25,13 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   _onDoneButtonPressed() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => CreateProfilePage()),
-    );
+    SafeExecutor.execute(context, () async {
+      await Future.delayed(Duration(seconds: 1));
+      await Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => CreateProfilePage()),
+      );
+    });
   }
 
   _onPrivacyPolicyTapped() {

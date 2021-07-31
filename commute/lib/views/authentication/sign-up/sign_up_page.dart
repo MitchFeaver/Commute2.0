@@ -2,6 +2,7 @@ import 'package:commute/components/colored_safe_area.dart';
 import 'package:commute/theme/components/custom_all.dart';
 import 'package:commute/theme/custom_colors.dart';
 import 'package:commute/views/authentication/sign-up/create_profile_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -89,6 +90,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.email,
                       ),
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     SizedBox(height: CustomSpacing.spacing_8),
                     TextField(
@@ -108,6 +110,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           splashColor: Colors.transparent,
                         ),
                       ),
+                      keyboardType: TextInputType.visiblePassword,
                       obscureText: _obscurePassword,
                     ),
                     SizedBox(height: CustomSpacing.spacing_8),
@@ -130,6 +133,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           splashColor: Colors.transparent,
                         ),
                       ),
+                      keyboardType: TextInputType.visiblePassword,
                       obscureText: _obscureConfirmPassword,
                     ),
                     SizedBox(height: CustomSpacing.spacing_24),
@@ -167,10 +171,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                       decoration: TextDecoration.underline,
                                     )),
                               ],
-                              style: TextStyle(
-                                color: CustomColors.defaultTextColor,
-                                fontSize: 16,
-                              )),
+                              style: Theme.of(context).textTheme.bodyText1,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         width: double.infinity),

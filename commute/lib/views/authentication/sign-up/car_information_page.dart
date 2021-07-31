@@ -1,56 +1,20 @@
 import 'package:commute/components/colored_safe_area.dart';
 import 'package:commute/theme/components/custom_all.dart';
-import 'package:commute/theme/custom_colors.dart';
-import 'package:commute/views/authentication/sign-up/car_information_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class CreateProfilePage extends StatefulWidget {
-  const CreateProfilePage() : super();
+class CarInformationPage extends StatefulWidget {
+  const CarInformationPage() : super();
 
   @override
-  State<StatefulWidget> createState() => _CreateProfilePageState();
+  State<StatefulWidget> createState() => _CarInformationPageState();
 }
 
-class _CreateProfilePageState extends State<CreateProfilePage> {
-  final Widget _profilePicturePlaceholder = CircleAvatar(
-    backgroundColor: Colors.white,
-    child: Stack(
-      children: [
-        Align(
-            alignment: Alignment.center,
-            child: Icon(Icons.person_outline,
-                color: CustomColors.primaryColorLight, size: 50)),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: CircleAvatar(
-                backgroundColor: CustomColors.primaryColorLight,
-                child: Icon(Icons.upload, color: Colors.white, size: 16),
-                radius: 12,
-              ),
-              radius: 16,
-            ),
-          ),
-        )
-      ],
-    ),
-    radius: 46,
-  );
-
+class _CarInformationPageState extends State<CarInformationPage> {
   _onBackButtonPressed() {
     Navigator.pop(context);
-  }
-
-  _onNextButtonPressed() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => CarInformationPage()),
-    );
   }
 
   @override
@@ -71,7 +35,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                 SizedBox(height: CustomSpacing.spacing_16),
                 Container(
                   child: Text(
-                    AppLocalizations.of(context)!.createYourProfile,
+                    AppLocalizations.of(context)!.letsTalkCars,
                     style: Theme.of(context).textTheme.headline2!.copyWith(
                           color: Colors.white,
                           fontSize: 48,
@@ -84,7 +48,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
             ),
             decoration: BoxDecoration(
                 image: DecorationImage(
-              image: AssetImage("assets/images/road_bird_view_forest.png"),
+              image: AssetImage("assets/images/city_driving_busy.png"),
               fit: BoxFit.cover,
             )),
             padding: EdgeInsets.fromLTRB(
@@ -102,24 +66,38 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                 child: Column(
                   children: [
                     Text(
-                      AppLocalizations.of(context)!.letsGetToKnowEachOther,
+                      AppLocalizations.of(context)!.helpUsWorkOutYourFuelCosts,
+                      style: Theme.of(context).textTheme.bodyText1,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: CustomSpacing.spacing_12),
+                    Text(
+                      AppLocalizations.of(context)!.youCanChangeThisLater,
                       style: Theme.of(context).textTheme.bodyText1,
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: CustomSpacing.spacing_24),
-                    CircleAvatar(
-                      // state with profile picture path + boolean check + upload functionality on tapped
-                      backgroundColor: CustomColors.primaryColorLight,
-                      child: _profilePicturePlaceholder,
-                      radius: 50,
+                    TextField(
+                      decoration: InputDecoration(
+                        prefix: Container(
+                          child: Text(AppLocalizations.of(context)!.mph_Symbol_Uppercase),
+                          padding: EdgeInsets.only(right: CustomSpacing.spacing_4),
+                        ),
+                        labelText: AppLocalizations.of(context)!.fuelEfficiency,
+                      ),
+                      keyboardType: TextInputType.number,
                     ),
                     SizedBox(height: CustomSpacing.spacing_24),
                     TextField(
                       decoration: InputDecoration(
+                        prefix: Container(
+                          child: Text("£"),
+                          padding: EdgeInsets.only(right: CustomSpacing.spacing_4),
+                        ),
                         labelText:
-                            AppLocalizations.of(context)!.myNameIs_Ellipsis,
+                            AppLocalizations.of(context)!.fuelPricePerLitre,
                       ),
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.number,
                     ),
                     SizedBox(height: CustomSpacing.spacing_24),
                     SizedBox(
@@ -136,7 +114,14 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                                       size: 21))
                             ],
                           ),
-                          onPressed: _onNextButtonPressed,
+                          onPressed: () {},
+                        ),
+                        width: double.infinity),
+                    SizedBox(height: CustomSpacing.spacing_12),
+                    SizedBox(
+                        child: OutlinedButton(
+                          child: Text(AppLocalizations.of(context)!.iDontDrive),
+                          onPressed: () {},
                         ),
                         width: double.infinity),
                   ],

@@ -8,14 +8,20 @@
   "createYourProfile": "Create your profile",
   "done": "Done",
   "email": "Email",
+  "fuelEfficiency": "Fuel efficiency",
+  "fuelPricePerLitre": "Fuel price per Litre",
   "getStarted": "Get Started",
   "@getStarted": {
     "description": "An invitation to start an app process"
   },
+  "helpUsWorkOutYourFuelCosts": "Help us work out your fuel costs by inputting the following about your car.",
   "iAlreadyHaveAnAccount": "I already have an account",
+  "iDontDrive": "I don't drive",
   "letUsDoTheWork": "Let us do the work",
-  "letsGetToKnowEachOther": "Let’s get to know each other, adding your name and picture will help your friends to find you",
+  "letsGetToKnowEachOther": "Let’s get to know each other, adding your name and picture will help your friends to find you.",
+  "letsTalkCars": "Let’s talk cars",
   "login": "Login",
+  "mph_Symbol_Uppercase": "MPH",
   "myNameIs_Ellipsis": "My name is...",
   "next": "Next",
   "offsetYourCarbonEmissions": "Offset your carbon emissions",
@@ -31,5 +37,6 @@
   "trackAndSettleBalances_Description": "Track and settle balances in app, never discuss who owes who again.",
   "travelCarbonNeutral_Description": "Travel carbon neutral by offsetting your emissions as you drive.",
   "welcome": "Welcome",
-  "whereAreYouGoingToday_QuestionMark": "Where are you going today?"
+  "whereAreYouGoingToday_QuestionMark": "Where are you going today?",
+  "youCanChangeThisLater": "You can change this later."
 }

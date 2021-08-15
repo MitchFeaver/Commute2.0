@@ -128,6 +128,17 @@ class _WelcomePageState extends State<WelcomePage> {
     provider.googleLogin();
   }
 
+  /*@override
+  void initState() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainPage()),
+      );
+    }
+    super.initState();
+  }*/
+
   @override
   void didChangeDependencies() {
     precacheImage(AssetImage("assets/images/car_evening.png"), context);
@@ -139,176 +150,155 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              // TO DO: Change where this piece of code is called, it's causing a flickering for the whole page
-              // and mess up with the slider
-              /*if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasData) {
-                return MainPage();
-              } else if (snapshot.hasError) {
-                return Center(
-                    child:
-                        Text(AppLocalizations.of(context)!.somethingWentWrong));
-              }*/
-              return ColoredSafeArea(
-                child: Scaffold(
-                  body: Column(
+        body: ColoredSafeArea(
+          child: Scaffold(
+            body: Column(
+              children: [
+                Expanded(
+                  child: Stack(
                     children: [
-                      Expanded(
-                        child: Stack(
-                          children: [
-                            CarouselSlider(
-                                items: _getCarouselItems(context).map((item) {
-                                  return Builder(
-                                    builder: (BuildContext context) {
-                                      return Container(
-                                          width: double.infinity, child: item);
-                                    },
-                                  );
-                                }).toList(),
-                                options: CarouselOptions(
-                                  autoPlay: true,
-                                  autoPlayInterval: Duration(seconds: 8),
-                                  height: double.infinity,
-                                  onPageChanged: (index, reason) {
-                                    setState(() {
-                                      _currentCarouselIndex = index;
-                                    });
-                                  },
-                                  viewportFraction: 1,
-                                )),
-                            Positioned(
-                              child: Row(
-                                children: _getCarouselItems(context)
-                                    .asMap()
-                                    .entries
-                                    .map((entry) {
-                                  return Container(
-                                    width: 8.0,
-                                    height: 8.0,
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: 4.0, horizontal: 4.0),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white.withOpacity(
-                                            _currentCarouselIndex == entry.key
-                                                ? 1
-                                                : 0.4)),
-                                  );
-                                }).toList(),
-                              ),
-                              bottom: 10,
-                              right: 14,
-                            ),
-                          ],
+                      CarouselSlider(
+                          items: _getCarouselItems(context).map((item) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return Container(
+                                    width: double.infinity, child: item);
+                              },
+                            );
+                          }).toList(),
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            autoPlayInterval: Duration(seconds: 8),
+                            height: double.infinity,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                _currentCarouselIndex = index;
+                              });
+                            },
+                            viewportFraction: 1,
+                          )),
+                      Positioned(
+                        child: Row(
+                          children: _getCarouselItems(context)
+                              .asMap()
+                              .entries
+                              .map((entry) {
+                            return Container(
+                              width: 8.0,
+                              height: 8.0,
+                              margin: EdgeInsets.symmetric(
+                                  vertical: 4.0, horizontal: 4.0),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white.withOpacity(
+                                      _currentCarouselIndex == entry.key
+                                          ? 1
+                                          : 0.4)),
+                            );
+                          }).toList(),
                         ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(
-                            CustomSpacing.spacing_24,
-                            CustomSpacing.spacing_8,
-                            CustomSpacing.spacing_24,
-                            CustomSpacing.spacing_24),
-                        child: Column(
-                          children: <Widget>[
-                            Text(
-                              AppLocalizations.of(context)!.welcome,
-                              style: Theme.of(context).textTheme.headline2,
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!
-                                  .whereAreYouGoingToday_QuestionMark,
-                              style: Theme.of(context).textTheme.bodyText1,
-                            ),
-                            SizedBox(height: CustomSpacing.spacing_24),
-                            SizedBox(
-                              child: TextButton(
-                                onPressed: _onSignUpButtonPressed,
-                                child: Text(
-                                    AppLocalizations.of(context)!.getStarted),
-                              ),
-                              height: 50,
-                              width: double.infinity,
-                            ),
-                            SizedBox(height: CustomSpacing.spacing_16),
-                            SizedBox(
-                              child: OutlinedButton(
-                                onPressed: _onLoginButtonPressed,
-                                child: Text(AppLocalizations.of(context)!
-                                    .iAlreadyHaveAnAccount),
-                              ),
-                              height: 50,
-                              width: double.infinity,
-                            ),
-                            SizedBox(height: CustomSpacing.spacing_16),
-                            SizedBox(
-                              child: OutlinedButton(
-                                onPressed: _googleSignIn,
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Image(
-                                        image: AssetImage(
-                                            "assets/images/google_logo.png"),
-                                        height: 18.0,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 24),
-                                        child: Text(
-                                          AppLocalizations.of(context)!
-                                              .signInWithGoogle,
-                                          style: TextStyle(
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                style: _googleSignInStyle,
-                              ),
-                              height: 50,
-                              width: double.infinity,
-                            ),
-                            SizedBox(height: CustomSpacing.spacing_16),
-                            Row(
-                              children: [
-                                TextButton(
-                                  child: Text(
-                                      AppLocalizations.of(context)!.privacy),
-                                  onPressed: () {},
-                                  style: _privacyTermsTextButtonStyle,
-                                ),
-                                SizedBox(width: 10),
-                                Text("|",
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1),
-                                SizedBox(width: 10),
-                                TextButton(
-                                  child:
-                                      Text(AppLocalizations.of(context)!.terms),
-                                  onPressed: () {},
-                                  style: _privacyTermsTextButtonStyle,
-                                ),
-                              ],
-                              mainAxisAlignment: MainAxisAlignment.center,
-                            )
-                          ],
-                        ),
+                        bottom: 10,
+                        right: 14,
                       ),
                     ],
                   ),
                 ),
-              );
-            }),
+                Container(
+                  padding: EdgeInsets.fromLTRB(
+                      CustomSpacing.spacing_24,
+                      CustomSpacing.spacing_8,
+                      CustomSpacing.spacing_24,
+                      CustomSpacing.spacing_24),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        AppLocalizations.of(context)!.welcome,
+                        style: Theme.of(context).textTheme.headline2,
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!
+                            .whereAreYouGoingToday_QuestionMark,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                      SizedBox(height: CustomSpacing.spacing_24),
+                      SizedBox(
+                        child: TextButton(
+                          onPressed: _onSignUpButtonPressed,
+                          child: Text(AppLocalizations.of(context)!.getStarted),
+                        ),
+                        height: 50,
+                        width: double.infinity,
+                      ),
+                      SizedBox(height: CustomSpacing.spacing_16),
+                      SizedBox(
+                        child: OutlinedButton(
+                          onPressed: _onLoginButtonPressed,
+                          child: Text(AppLocalizations.of(context)!
+                              .iAlreadyHaveAnAccount),
+                        ),
+                        height: 50,
+                        width: double.infinity,
+                      ),
+                      SizedBox(height: CustomSpacing.spacing_16),
+                      SizedBox(
+                        child: OutlinedButton(
+                          onPressed: _googleSignIn,
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Image(
+                                  image: AssetImage(
+                                      "assets/images/google_logo.png"),
+                                  height: 18.0,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 24),
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .signInWithGoogle,
+                                    style: TextStyle(
+                                      color: Colors.black54,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          style: _googleSignInStyle,
+                        ),
+                        height: 50,
+                        width: double.infinity,
+                      ),
+                      SizedBox(height: CustomSpacing.spacing_16),
+                      Row(
+                        children: [
+                          TextButton(
+                            child: Text(AppLocalizations.of(context)!.privacy),
+                            onPressed: () {},
+                            style: _privacyTermsTextButtonStyle,
+                          ),
+                          SizedBox(width: 10),
+                          Text("|",
+                              style: Theme.of(context).textTheme.bodyText1),
+                          SizedBox(width: 10),
+                          TextButton(
+                            child: Text(AppLocalizations.of(context)!.terms),
+                            onPressed: () {},
+                            style: _privacyTermsTextButtonStyle,
+                          ),
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       );
 }

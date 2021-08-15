@@ -6,6 +6,7 @@ import 'package:commute/utils/form/form_field_helper.dart';
 import 'package:commute/utils/validation/email_validator.dart';
 import 'package:commute/utils/validation/password_validator.dart';
 import 'package:commute/views/authentication/sign-up/create_profile_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -43,11 +44,24 @@ class _SignUpPageState extends State<SignUpPage> {
     _validateInput();
   }
 
-  _validateInput() {
+  _validateInput() async {
     final FormState? _formState = _formKey.currentState;
     if (_formState!.validate()) {
-    } else {
-      setState(() {});
+      _formState.save();
+      await SafeExecutor.execute(context, () async {
+        try {
+          UserCredential _userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+              email: _email,
+              password: _password
+          );
+        } on FirebaseAuthException catch (_exception) {
+          print(_exception.code);
+        }
+      });
+      await Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => CreateProfilePage()),
+      );
     }
   }
 

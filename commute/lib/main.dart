@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:commute/views/authentication/welcome_page.dart';
 import 'package:commute/views/main/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,7 +25,7 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final _navigatorKey = new GlobalKey<NavigatorState>();
+  late StreamSubscription<User?> _streamSubscription;
 
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
                           AppLocalizations.of(context)!.somethingWentWrong));
                 }
                 if (snapshot.connectionState == ConnectionState.done) {
-                  FirebaseAuth.instance
+                  _streamSubscription = FirebaseAuth.instance
                       .authStateChanges()
                       .listen((User? user) async {
                     if (user == null) {
@@ -63,6 +65,7 @@ class MyApp extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => MainPage()),
                       );
                     }
+                    await _streamSubscription.cancel();
                   });
                 }
                 return Center(child: CircularProgressIndicator());

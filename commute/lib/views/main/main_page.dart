@@ -67,7 +67,7 @@ class _MainPageState extends State<MainPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            user!.displayName!,
+            user!.displayName ?? "test",
           ),
           // TO DO: need to be handle gracefully if the user doesn't have a profile picture
           /*CircleAvatar(

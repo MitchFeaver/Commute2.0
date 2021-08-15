@@ -22,6 +22,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<State> _pageKey = GlobalKey<State>();
   String _email = "";
   String _password = "";
   String _confirmPassword = "";
@@ -34,34 +35,34 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   _onDoneButtonPressed() async {
-    /*await SafeExecutor.execute(context, () async {
-      await Future.delayed(Duration(seconds: 1));
-    });
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => CreateProfilePage()),
-    );*/
     _validateInput();
   }
 
   _validateInput() async {
+    FocusScope.of(context).unfocus();
     final FormState? _formState = _formKey.currentState;
     if (_formState!.validate()) {
       _formState.save();
-      await SafeExecutor.execute(context, () async {
+      UserCredential? _userCredential;
+      await SafeExecutor.execute(_pageKey.currentContext!, () async {
         try {
-          UserCredential _userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-              email: _email,
-              password: _password
+          _userCredential = await FirebaseAuth.instance
+              .createUserWithEmailAndPassword(
+                  email: _email, password: _password);
+          await Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => CreateProfilePage()),
           );
         } on FirebaseAuthException catch (_exception) {
           print(_exception.code);
         }
       });
-      await Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => CreateProfilePage()),
-      );
+      if (_userCredential != null) {
+        /*await Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => CreateProfilePage()),
+        );*/
+      }
     }
   }
 
@@ -105,6 +106,7 @@ class _SignUpPageState extends State<SignUpPage> {
         children: [
           Container(
             child: Column(
+              key: _pageKey,
               children: [
                 TextButton.icon(
                   onPressed: _onBackButtonPressed,
@@ -160,7 +162,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             _onInputChanged();
                           },
                           validator: (input) =>
-                              EmailValidator.getValidationMessage(context, input),
+                              EmailValidator.getValidationMessage(
+                                  context, input),
                         ),
                         SizedBox(height: CustomSpacing.spacing_8),
                         TextFormField(
@@ -192,7 +195,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             _onInputChanged();
                           },
                           validator: (input) =>
-                              PasswordValidator.getValidationMessage(context, input),
+                              PasswordValidator.getValidationMessage(
+                                  context, input),
                         ),
                         SizedBox(height: CustomSpacing.spacing_8),
                         TextFormField(
@@ -224,8 +228,9 @@ class _SignUpPageState extends State<SignUpPage> {
                             });
                             _onInputChanged();
                           },
-                          validator: (input) =>
-                              PasswordValidator.getConfirmPasswordValidationMessage(context, input, _password),
+                          validator: (input) => PasswordValidator
+                              .getConfirmPasswordValidationMessage(
+                                  context, input, _password),
                         )
                       ],
                     ),

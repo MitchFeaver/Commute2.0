@@ -128,17 +128,6 @@ class _WelcomePageState extends State<WelcomePage> {
     provider.googleLogin();
   }
 
-  /*@override
-  void initState() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => MainPage()),
-      );
-    }
-    super.initState();
-  }*/
-
   @override
   void didChangeDependencies() {
     precacheImage(AssetImage("assets/images/car_evening.png"), context);

@@ -2,6 +2,7 @@ import 'package:commute/components/colored_safe_area.dart';
 import 'package:commute/theme/components/custom_all.dart';
 import 'package:commute/theme/custom_colors.dart';
 import 'package:commute/views/authentication/sign-up/car_information_page.dart';
+import 'package:commute/views/main/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -43,7 +44,10 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   );
 
   _onBackButtonPressed() {
-    Navigator.pop(context);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => MainPage()),
+    );
   }
 
   _onNextButtonPressed() {

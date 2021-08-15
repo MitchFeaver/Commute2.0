@@ -42,10 +42,6 @@ class _WelcomePageState extends State<WelcomePage> {
       textStyle: TextStyle(color: CustomColors.defaultTextColor));
 
   List<Widget> _getCarouselItems(context) {
-    precacheImage(AssetImage("assets/images/car_evening.png"), context);
-    precacheImage(
-        AssetImage("assets/images/car_resting_mountains.png"), context);
-    precacheImage(AssetImage("assets/images/clouds.png"), context);
     return [
       Container(
         child: Image(
@@ -133,11 +129,22 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   @override
+  void didChangeDependencies() {
+    precacheImage(AssetImage("assets/images/car_evening.png"), context);
+    precacheImage(
+        AssetImage("assets/images/car_resting_mountains.png"), context);
+    precacheImage(AssetImage("assets/images/clouds.png"), context);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) => Scaffold(
         body: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+              // TO DO: Change where this piece of code is called, it's causing a flickering for the whole page
+              // and mess up with the slider
+              /*if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasData) {
                 return MainPage();
@@ -145,7 +152,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 return Center(
                     child:
                         Text(AppLocalizations.of(context)!.somethingWentWrong));
-              }
+              }*/
               return ColoredSafeArea(
                 child: Scaffold(
                   body: Column(

@@ -110,15 +110,13 @@ class _WelcomePageState extends State<WelcomePage> {
       );
 
   void _onSignUpButtonPressed() {
-    Navigator.push(
-      context,
+    Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => SignUpPage()),
     );
   }
 
   void _onLoginButtonPressed() {
-    Navigator.push(
-      context,
+    Navigator.of(context).push(
       MaterialPageRoute(builder: (context) => LoginPage()),
     );
   }

@@ -38,6 +38,16 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  void _onLogOutPressed() {
+    // TO DO: need to check if google or firebaseauth
+    FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => WelcomePage()));
+    /*final provider =
+                  Provider.of<GoogleSignInProvider>(context, listen: false);
+              provider.logOut();*/
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
@@ -48,17 +58,7 @@ class _MainPageState extends State<MainPage> {
         actions: [
           TextButton(
             child: Text('Log Out'),
-            onPressed: () async {
-              // TO DO: need to check if google or firebaseauth
-              await FirebaseAuth.instance.signOut();
-              await Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => WelcomePage()),
-              );
-              /*final provider =
-                  Provider.of<GoogleSignInProvider>(context, listen: false);
-              provider.logOut();*/
-            },
+            onPressed: _onLogOutPressed,
           )
         ],
       ),
@@ -67,7 +67,7 @@ class _MainPageState extends State<MainPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            user!.displayName ?? "test",
+            user?.displayName ?? "test",
           ),
           // TO DO: need to be handle gracefully if the user doesn't have a profile picture
           /*CircleAvatar(

@@ -25,11 +25,12 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-  late StreamSubscription<User?> _streamSubscription;
-
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
-        create: (context) => GoogleSignInProvider(),
+        create: (context) {
+          GoogleSignInProvider();
+          Firebase.initializeApp();
+        },
         child: MaterialApp(
           title: 'Commute',
           localizationsDelegates: [
@@ -43,33 +44,39 @@ class MyApp extends StatelessWidget {
           ],
           theme: CustomTheme.lightTheme,
           home: FutureBuilder(
-              future: Firebase.initializeApp(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasError) {
-                  return Center(
-                      child: Text(
-                          AppLocalizations.of(context)!.somethingWentWrong));
-                }
-                if (snapshot.connectionState == ConnectionState.done) {
-                  _streamSubscription = FirebaseAuth.instance
-                      .authStateChanges()
-                      .listen((User? user) async {
-                    if (user == null) {
-                      await Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => WelcomePage()),
-                      );
+            future: Firebase.initializeApp(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                    child:
+                        Text(AppLocalizations.of(context)!.somethingWentWrong));
+              }
+              if (snapshot.connectionState == ConnectionState.done) {
+                return FutureBuilder<User?>(
+                  future: Future.value(FirebaseAuth.instance.currentUser),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<User?> snapshot) {
+                    if (snapshot.hasData) {
+                      WidgetsBinding.instance?.addPostFrameCallback((_) {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (context) => MainPage()),
+                        );
+                      });
                     } else {
-                      await Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => MainPage()),
-                      );
+                      WidgetsBinding.instance?.addPostFrameCallback((_) {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                              builder: (context) => WelcomePage()),
+                        );
+                      });
                     }
-                    await _streamSubscription.cancel();
-                  });
-                }
-                return Center(child: CircularProgressIndicator());
-              }),
+                    return Center(child: CircularProgressIndicator());
+                  },
+                );
+              }
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
         ),
       );
 }

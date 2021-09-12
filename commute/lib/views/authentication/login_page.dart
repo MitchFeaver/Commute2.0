@@ -1,7 +1,7 @@
 import 'package:commute/components/colored_safe_area.dart';
 import 'package:commute/theme/components/custom_all.dart';
 import 'package:commute/theme/custom_colors.dart';
-import 'package:commute/views/authentication/sign-up/create_profile_page.dart';
+import 'package:commute/views/main/main_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -22,10 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _onDoneButtonPressed() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => CreateProfilePage()),
-    );
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainPage()));
   }
 
   _onPrivacyPolicyTapped() {

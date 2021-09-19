@@ -1,6 +1,9 @@
 import 'package:commute/components/colored_safe_area.dart';
 import 'package:commute/theme/components/custom_all.dart';
 import 'package:commute/theme/custom_colors.dart';
+import 'package:commute/utils/form/form_field_helper.dart';
+import 'package:commute/utils/validation/email_validator.dart';
+import 'package:commute/utils/validation/password_validator.dart';
 import 'package:commute/views/main/main_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +18,37 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _canPressDoneButton = false;
   bool _obscurePassword = true;
+  String _email = "";
+  String _password = "";
 
   _onBackButtonPressed() {
     Navigator.pop(context);
   }
 
   _onDoneButtonPressed() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => MainPage()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MainPage()));
+  }
+
+  _onInputChanged() {
+    if (_canPressDoneButton &&
+        (_email.isEmpty ||
+            _password.isEmpty ||
+            !EmailValidator.isValid(_email) ||
+            !PasswordValidator.isValid(_password))) {
+      setState(() {
+        _canPressDoneButton = false;
+      });
+    } else if (!_canPressDoneButton &&
+        _email.isNotEmpty &&
+        _password.isNotEmpty &&
+        EmailValidator.isValid(_email) &&
+        PasswordValidator.isValid(_password)) {
+      setState(() {
+        _canPressDoneButton = true;
+      });
+    }
   }
 
   _onPrivacyPolicyTapped() {
@@ -78,17 +104,28 @@ class _LoginPageState extends State<LoginPage> {
                   child: Container(
                     child: Material(
                       child: Form(
-                        autovalidateMode: AutovalidateMode.always,
                         child: Column(
                           children: [
-                            TextField(
+                            TextFormField(
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
                               decoration: InputDecoration(
                                 labelText: AppLocalizations.of(context)!.email,
                               ),
                               keyboardType: TextInputType.emailAddress,
+                              inputFormatters: [FormFieldHelper.preventWhitespaces],
+                              onChanged: (value) {
+                                setState(() {
+                                  _email = value;
+                                });
+                                _onInputChanged();
+                              },
+                              validator: (input) =>
+                                  EmailValidator.getValidationMessage(
+                                      context, input),
                             ),
                             SizedBox(height: CustomSpacing.spacing_8),
-                            TextField(
+                            TextFormField(
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
                               decoration: InputDecoration(
                                 labelText: AppLocalizations.of(context)!.password,
                                 suffixIcon: IconButton(
@@ -105,14 +142,24 @@ class _LoginPageState extends State<LoginPage> {
                                   splashColor: Colors.transparent,
                                 ),
                               ),
+                              inputFormatters: [FormFieldHelper.preventWhitespaces],
                               keyboardType: TextInputType.visiblePassword,
                               obscureText: _obscurePassword,
+                              onChanged: (value) {
+                                setState(() {
+                                  _password = value;
+                                });
+                                _onInputChanged();
+                              },
+                              validator: (input) =>
+                                  PasswordValidator.getValidationMessage(
+                                      context, input, false),
                             ),
                             SizedBox(height: CustomSpacing.spacing_24),
                             SizedBox(
                                 child: TextButton(
                                   child: Text(AppLocalizations.of(context)!.done),
-                                  onPressed: _onDoneButtonPressed,
+                                  onPressed: _canPressDoneButton ? _onDoneButtonPressed : null,
                                 ),
                                 width: double.infinity),
                             SizedBox(height: CustomSpacing.spacing_24),

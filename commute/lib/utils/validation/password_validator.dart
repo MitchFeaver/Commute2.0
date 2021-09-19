@@ -26,10 +26,10 @@ class PasswordValidator {
     }
   }
 
-  static String? getValidationMessage(BuildContext context, String? value) {
+  static String? getValidationMessage(BuildContext context, String? value, [isFullValidation = true]) {
     if (value == null || value.isEmpty) {
       return AppLocalizations.of(context)!.required;
-    } else {
+    } else if (isFullValidation) {
       return _buildMessage(
           context,
           value.length >= minimumPasswordLength,

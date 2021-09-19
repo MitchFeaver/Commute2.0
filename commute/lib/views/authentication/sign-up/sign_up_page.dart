@@ -49,19 +49,16 @@ class _SignUpPageState extends State<SignUpPage> {
           _userCredential = await FirebaseAuth.instance
               .createUserWithEmailAndPassword(
                   email: _email, password: _password);
-          await Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => CreateProfilePage()),
-          );
         } on FirebaseAuthException catch (_exception) {
           print(_exception.code);
         }
       });
       if (_userCredential != null) {
-        /*await Navigator.pushReplacement(
+        await Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => CreateProfilePage()),
-        );*/
+              (_) => false,
+        );
       }
     }
   }

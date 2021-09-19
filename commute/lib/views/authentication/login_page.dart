@@ -1,10 +1,12 @@
 import 'package:commute/components/colored_safe_area.dart';
+import 'package:commute/components/safe_executor.dart';
 import 'package:commute/theme/components/custom_all.dart';
 import 'package:commute/theme/custom_colors.dart';
 import 'package:commute/utils/form/form_field_helper.dart';
 import 'package:commute/utils/validation/email_validator.dart';
 import 'package:commute/utils/validation/password_validator.dart';
 import 'package:commute/views/main/main_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -18,6 +20,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<State> _pageKey = GlobalKey<State>();
   bool _canPressDoneButton = false;
   bool _obscurePassword = true;
   String _email = "";
@@ -27,8 +31,8 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.pop(context);
   }
 
-  _onDoneButtonPressed() {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => MainPage()));
+  _onDoneButtonPressed() async {
+    _validateInput();
   }
 
   _onInputChanged() {
@@ -59,6 +63,31 @@ class _LoginPageState extends State<LoginPage> {
     // do something here
   }
 
+  _validateInput() async {
+    FocusScope.of(context).unfocus();
+    final FormState? _formState = _formKey.currentState;
+    if (_formState!.validate()) {
+      _formState.save();
+      UserCredential? _userCredential;
+      await SafeExecutor.execute(_pageKey.currentContext!, () async {
+        try {
+          _userCredential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(
+              email: _email, password: _password);
+        } on FirebaseAuthException catch (_exception) {
+          print(_exception.code);
+        }
+      });
+      if (_userCredential != null) {
+        await Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => MainPage()),
+              (_) => false,
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ColoredSafeArea(
@@ -67,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Container(
                 child: Column(
+                  key: _pageKey,
                   children: [
                     TextButton.icon(
                       onPressed: _onBackButtonPressed,
@@ -104,6 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Container(
                     child: Material(
                       child: Form(
+                        key: _formKey,
                         child: Column(
                           children: [
                             TextFormField(

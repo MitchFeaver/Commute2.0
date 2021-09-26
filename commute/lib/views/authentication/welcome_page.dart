@@ -7,6 +7,8 @@ import 'package:commute/theme/custom_colors.dart';
 import 'package:commute/views/authentication/login_page.dart';
 import 'package:commute/views/authentication/sign-up/sign_up_page.dart';
 import 'package:commute/views/main/main_page.dart';
+import 'package:commute/views/sliding-sheet/privacy_policy.dart';
+import 'package:commute/views/sliding-sheet/terms_conditions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -265,7 +267,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         children: [
                           TextButton(
                             child: Text(AppLocalizations.of(context)!.privacy),
-                            onPressed: () {},
+                            onPressed: () => PrivacyPolicy().show(context),
                             style: _privacyTermsTextButtonStyle,
                           ),
                           SizedBox(width: 10),
@@ -274,7 +276,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           SizedBox(width: 10),
                           TextButton(
                             child: Text(AppLocalizations.of(context)!.terms),
-                            onPressed: () {},
+                            onPressed: () => TermsAndConditions().show(context),
                             style: _privacyTermsTextButtonStyle,
                           ),
                         ],

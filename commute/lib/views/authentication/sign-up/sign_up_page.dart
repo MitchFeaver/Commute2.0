@@ -6,6 +6,8 @@ import 'package:commute/utils/form/form_field_helper.dart';
 import 'package:commute/utils/validation/email_validator.dart';
 import 'package:commute/utils/validation/password_validator.dart';
 import 'package:commute/views/authentication/sign-up/create_profile_page.dart';
+import 'package:commute/views/sliding-sheet/privacy_policy.dart';
+import 'package:commute/views/sliding-sheet/terms_conditions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -57,7 +59,7 @@ class _SignUpPageState extends State<SignUpPage> {
         await Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => CreateProfilePage()),
-              (_) => false,
+          (_) => false,
         );
       }
     }
@@ -85,14 +87,6 @@ class _SignUpPageState extends State<SignUpPage> {
         _canPressDoneButton = true;
       });
     }
-  }
-
-  _onPrivacyPolicyTapped() {
-    // do something here
-  }
-
-  _onTermsAndConditionsTapped() {
-    // do something here
   }
 
   @override
@@ -250,8 +244,9 @@ class _SignUpPageState extends State<SignUpPage> {
                                 text:
                                     AppLocalizations.of(context)!.bySigningUp),
                             TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = _onTermsAndConditionsTapped(),
+                                recognizer: new TapGestureRecognizer()
+                                  ..onTap =
+                                      () => TermsAndConditions().show(context),
                                 text: AppLocalizations.of(context)!
                                     .termsAndConditions,
                                 style: TextStyle(
@@ -261,8 +256,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                 text: AppLocalizations.of(context)!
                                     .and_Lowercase),
                             TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = _onPrivacyPolicyTapped(),
+                                recognizer: new TapGestureRecognizer()
+                                  ..onTap = () => PrivacyPolicy().show(context),
                                 text:
                                     AppLocalizations.of(context)!.privacyPolicy,
                                 style: TextStyle(
